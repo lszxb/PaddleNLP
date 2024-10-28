@@ -332,13 +332,15 @@ class StaticGraphPredictor(BasePredictor):
             inference_config.enable_new_ir()
             if in_cinn_mode():
                 inference_config.enable_cinn()
-
-        if is_paddlenlp_ops_available():
-            import paddlenlp_ops
+                
+        try:
+            from paddlenlp_ops import vtensor_reserve_one_token
             inference_config.enable_custom_passes([
                 "remove_assign_out_pass", # remove the assign_out_ op at the end of while loop
                 "apply_vtensor_concat_pass", # replace concat op with vtensor implementation
             ])
+        except:
+            pass
 
         with static_mode_guard():
             self.predictor = paddle.inference.create_predictor(inference_config)
