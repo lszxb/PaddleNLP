@@ -52,11 +52,13 @@ from paddlenlp.transformers import (
     LlamaForCausalLM,
     LlamaForCausalLMPipe,
     LlamaTokenizer,
+    Qwen2ForCausalLM,
+    Qwen2ForCausalLMPipe,
     register_sequence_parallel_allreduce_hooks,
 )
 from paddlenlp.transformers.configuration_utils import LlmMetaConfig
-from paddlenlp.utils.llm_utils import (
-    CausalLMTrainer,
+from paddlenlp.trl import SFTTrainer
+from paddlenlp.trl.llm_utils import (
     ZeroPaddingIterDatasetCallback,
     compute_metrics,
     get_lora_target_modules,
@@ -64,11 +66,12 @@ from paddlenlp.utils.llm_utils import (
     init_chat_template,
 )
 from paddlenlp.utils.log import logger
+from paddlenlp.utils.tools import get_env_device
 
 # Fine-tune Environment Variables to support sharding stage1 overlap optimization.
 os.environ["USE_CASUAL_MASK"] = "False"
 
-flash_mask_support_list = [LlamaForCausalLM, LlamaForCausalLMPipe]
+flash_mask_support_list = [LlamaForCausalLM, LlamaForCausalLMPipe, Qwen2ForCausalLM, Qwen2ForCausalLMPipe]
 
 
 def main():
@@ -104,6 +107,16 @@ def main():
                 f"Checkpoint detected, resuming training at {last_checkpoint}. To avoid this behavior, change "
                 "the `--output_dir` or add `--overwrite_output_dir` to train from scratch."
             )
+
+    if get_env_device() == "xpu" and training_args.gradient_accumulation_steps > 1:
+        try:
+            from paddle_xpu.layers.nn.linear import LinearConfig  # noqa: F401
+
+            LinearConfig.enable_accumulate_steps_opt()
+            LinearConfig.set_accumulate_steps(training_args.gradient_accumulation_steps)
+        except ImportError:
+            # It's OK, not use accumulate_steps optimization
+            pass
 
     # Load model
     if training_args.fp16_opt_level == "O2":
@@ -337,14 +350,6 @@ def main():
     else:
         trans_func = partial(get_convert_example(model), tokenizer=tokenizer, data_args=data_args)
 
-    if data_args.zero_padding:
-        if (
-            model.base_model_prefix not in ["llama", "bloom", "chatglm", "chatglm_v2", "qwen", "mistral", "jamba"]
-            and training_args.pipeline_parallel_degree < 1
-        ):
-            raise NotImplementedError(
-                "Zero Padding data stream is only implemented for LLaMA, Bloom, ChatGLM, QWen and Mistral so far."
-            )
     train_ds = (
         train_ds.map(
             partial(trans_func, is_test=False, zero_padding=data_args.zero_padding, flash_mask=model_args.flash_mask)
@@ -536,7 +541,7 @@ def main():
     else:
         metrics = compute_metrics
 
-    trainer = CausalLMTrainer(
+    trainer = SFTTrainer(
         model=model,
         args=training_args,
         train_dataset=train_ds,
@@ -557,6 +562,8 @@ def main():
         gen_args=gen_args,
         data_args=data_args,
     )
+    trainable_parameters = [p for p in model.parameters() if not p.stop_gradient]
+    trainer.set_optimizer_grouped_parameters(trainable_parameters)
 
     # Train
     if training_args.do_train:

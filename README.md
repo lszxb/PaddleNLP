@@ -42,7 +42,8 @@
 
 ### <a href=#多硬件训推一体> 🔧 多硬件训推一体 </a>
 
-支持英伟达 GPU、昆仑 XPU、昇腾 NPU、燧原 GCU 和海光 DCU 等多个硬件的大模型训练和推理，套件接口支持硬件快速切换，大幅降低硬件切换研发成本。
+支持英伟达 GPU、昆仑 XPU、昇腾 NPU、燧原 GCU 和海光 DCU 等多个硬件的大模型和自然语言理解模型训练和推理，套件接口支持硬件快速切换，大幅降低硬件切换研发成本。
+当前支持的自然语言理解模型：[多硬件自然语言理解模型列表](./docs/model_zoo/model_list_multy_device.md)
 
 ### <a href=#高效易用的预训练> 🚀 高效易用的预训练 </a>
 
@@ -63,26 +64,31 @@ Unified Checkpoint 大模型存储格式在模型参数分布上支持动态扩�
 
 * 模型参数已支持 LLaMA 系列、Baichuan 系列、Bloom 系列、ChatGLM 系列、Gemma 系列、Mistral 系列、OPT 系列和 Qwen 系列，详细列表👉【LLM】模型参数支持列表如下：
 
-|                                        模型系列                                         | 模型名称                                                                                                                                                                                                                                                                                                                                                                                      |
-|:---------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|    [LLaMA](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/llama)     | facebook/llama-7b, facebook/llama-13b, facebook/llama-30b, facebook/llama-65b                                                                                                                                                                                                                                                                                                                 |
-|    [LLama2](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/llama)    | meta-llama/Llama-2-7b, meta-llama/Llama-2-7b-chat, meta-llama/Llama-2-13b, meta-llama/Llama-2-13b-chat, meta-llama/Llama-2-70b, meta-llama/Llama-2-70b-chat                                                                                                                                                                                                                                   |
-|    [LLama3](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/llama)    | meta-llama/Meta-Llama-3-8B, meta-llama/Meta-Llama-3-8B-Instruct, meta-llama/Meta-Llama-3-70B, meta-llama/Meta-Llama-3-70B-Instruct                                                                                                                                                                                                                                                            |
-|   [LLama3.1](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/llama)   | meta-llama/Meta-Llama-3.1-8B, meta-llama/Meta-Llama-3.1-8B-Instruct, meta-llama/Meta-Llama-3.1-70B, meta-llama/Meta-Llama-3.1-70B-Instruct, meta-llama/Meta-Llama-3.1-405B, meta-llama/Meta-Llama-3.1-405B-Instruct, meta-llama/Llama-Guard-3-8B                                                                                                                                              |
-| [Baichuan](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/baichuan)  | baichuan-inc/Baichuan-7B, baichuan-inc/Baichuan-13B-Base, baichuan-inc/Baichuan-13B-Chat                                                                                                                                                                                                                                                                                                      |
-| [Baichuan2](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/baichuan) | baichuan-inc/Baichuan2-7B-Base, baichuan-inc/Baichuan2-7B-Chat, baichuan-inc/Baichuan2-13B-Base, baichuan-inc/Baichuan2-13B-Chat                                                                                                                                                                                                                                                              |
-|    [Bloom](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/bloom)     | bigscience/bloom-560m, bigscience/bloom-560m-bf16, bigscience/bloom-1b1, bigscience/bloom-3b, bigscience/bloom-7b1, bigscience/bloomz-560m, bigscience/bloomz-1b1, bigscience/bloomz-3b, bigscience/bloomz-7b1-mt, bigscience/bloomz-7b1-p3, bigscience/bloomz-7b1, bellegroup/belle-7b-2m                                                                                                    |
-|  [ChatGLM](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/chatglm/)  | THUDM/chatglm-6b, THUDM/chatglm-6b-v1.1                                                                                                                                                                                                                                                                                                                                                       |
-| [ChatGLM2](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/chatglm2)  | THUDM/chatglm2-6b                                                                                                                                                                                                                                                                                                                                                                             |
-| [ChatGLM3](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/chatglm2)  | THUDM/chatglm3-6b                                                                                                                                                                                                                                                                                                                                                                             |
-|    [Gemma](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/gemma)     | google/gemma-7b, google/gemma-7b-it, google/gemma-2b, google/gemma-2b-it                                                                                                                                                                                                                                                                                                                      |
-|  [Mistral](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/mistral)   | mistralai/Mistral-7B-Instruct-v0.3, mistralai/Mistral-7B-v0.1                                                                                                                                                                                                                                                                                                                                 |
-|  [Mixtral](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/mixtral)   | mistralai/Mixtral-8x7B-Instruct-v0.1                                                                                                                                                                                                                                                                                                                                                          |
-|      [OPT](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/opt)       | facebook/opt-125m, facebook/opt-350m, facebook/opt-1.3b, facebook/opt-2.7b, facebook/opt-6.7b, facebook/opt-13b, facebook/opt-30b, facebook/opt-66b, facebook/opt-iml-1.3b, opt-iml-max-1.3b                                                                                                                                                                                                  |
-|     [Qwen](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/qwen/)     | qwen/qwen-7b, qwen/qwen-7b-chat, qwen/qwen-14b, qwen/qwen-14b-chat, qwen/qwen-72b, qwen/qwen-72b-chat,                                                                                                                                                                                                                                                                                        |
-|   [Qwen1.5](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/qwen/)    | Qwen/Qwen1.5-0.5B, Qwen/Qwen1.5-0.5B-Chat, Qwen/Qwen1.5-1.8B, Qwen/Qwen1.5-1.8B-Chat, Qwen/Qwen1.5-4B, Qwen/Qwen1.5-4B-Chat, Qwen/Qwen1.5-7B, Qwen/Qwen1.5-7B-Chat, Qwen/Qwen1.5-14B, Qwen/Qwen1.5-14B-Chat, Qwen/Qwen1.5-32B, Qwen/Qwen1.5-32B-Chat, Qwen/Qwen1.5-72B, Qwen/Qwen1.5-72B-Chat, Qwen/Qwen1.5-110B, Qwen/Qwen1.5-110B-Chat, Qwen/Qwen1.5-MoE-A2.7B, Qwen/Qwen1.5-MoE-A2.7B-Chat |
-|    [Qwen2](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/qwen/)     | Qwen/Qwen2-0.5B, Qwen/Qwen2-0.5B-Instruct, Qwen/Qwen2-1.5B, Qwen/Qwen2-1.5B-Instruct, Qwen/Qwen2-7B, Qwen/Qwen2-7B-Instruct, Qwen/Qwen2-72B, Qwen/Qwen2-72B-Instruct, Qwen/Qwen2-57B-A14B, Qwen/Qwen2-57B-A14B-Instruct                                                                                                                                                                       |
-|    [Yuan2](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/yuan/)     | IEITYuan/Yuan2-2B, IEITYuan/Yuan2-51B, IEITYuan/Yuan2-102B                                                                                                                                                                                                                                                                                                                                    |
+|                                         模型系列                                         | 模型名称                                                                                                                                                                                                                                                                                                                                                                                      |
+|:----------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|     [LLaMA](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/llama)     | facebook/llama-7b, facebook/llama-13b, facebook/llama-30b, facebook/llama-65b                                                                                                                                                                                                                                                                                                                 |
+|    [LLama2](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/llama)     | meta-llama/Llama-2-7b, meta-llama/Llama-2-7b-chat, meta-llama/Llama-2-13b, meta-llama/Llama-2-13b-chat, meta-llama/Llama-2-70b, meta-llama/Llama-2-70b-chat                                                                                                                                                                                                                                   |
+|    [LLama3](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/llama)     | meta-llama/Meta-Llama-3-8B, meta-llama/Meta-Llama-3-8B-Instruct, meta-llama/Meta-Llama-3-70B, meta-llama/Meta-Llama-3-70B-Instruct                                                                                                                                                                                                                                                            |
+|   [LLama3.1](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/llama)    | meta-llama/Meta-Llama-3.1-8B, meta-llama/Meta-Llama-3.1-8B-Instruct, meta-llama/Meta-Llama-3.1-70B, meta-llama/Meta-Llama-3.1-70B-Instruct, meta-llama/Meta-Llama-3.1-405B, meta-llama/Meta-Llama-3.1-405B-Instruct, meta-llama/Llama-Guard-3-8B                                                                                                                                              |
+|   [LLama3.2](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/llama)    | meta-llama/Llama-3.2-1B, meta-llama/Llama-3.2-1B-Instruct, meta-llama/Llama-3.2-3B, meta-llama/Llama-3.2-3B-Instruct, meta-llama/Llama-Guard-3-1B                                                                                                                                                                                                                                             |
+|  [Baichuan](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/baichuan)  | baichuan-inc/Baichuan-7B, baichuan-inc/Baichuan-13B-Base, baichuan-inc/Baichuan-13B-Chat                                                                                                                                                                                                                                                                                                      |
+| [Baichuan2](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/baichuan)  | baichuan-inc/Baichuan2-7B-Base, baichuan-inc/Baichuan2-7B-Chat, baichuan-inc/Baichuan2-13B-Base, baichuan-inc/Baichuan2-13B-Chat                                                                                                                                                                                                                                                              |
+|     [Bloom](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/bloom)     | bigscience/bloom-560m, bigscience/bloom-560m-bf16, bigscience/bloom-1b1, bigscience/bloom-3b, bigscience/bloom-7b1, bigscience/bloomz-560m, bigscience/bloomz-1b1, bigscience/bloomz-3b, bigscience/bloomz-7b1-mt, bigscience/bloomz-7b1-p3, bigscience/bloomz-7b1, bellegroup/belle-7b-2m                                                                                                    |
+|  [ChatGLM](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/chatglm/)   | THUDM/chatglm-6b, THUDM/chatglm-6b-v1.1                                                                                                                                                                                                                                                                                                                                                       |
+|  [ChatGLM2](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/chatglm2)  | THUDM/chatglm2-6b                                                                                                                                                                                                                                                                                                                                                                             |
+|  [ChatGLM3](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/chatglm2)  | THUDM/chatglm3-6b                                                                                                                                                                                                                                                                                                                                                                             |
+|     [Gemma](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/gemma)     | google/gemma-7b, google/gemma-7b-it, google/gemma-2b, google/gemma-2b-it                                                                                                                                                                                                                                                                                                                      |
+|   [Mistral](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/mistral)   | mistralai/Mistral-7B-Instruct-v0.3, mistralai/Mistral-7B-v0.1                                                                                                                                                                                                                                                                                                                                 |
+|   [Mixtral](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/mixtral)   | mistralai/Mixtral-8x7B-Instruct-v0.1                                                                                                                                                                                                                                                                                                                                                          |
+|       [OPT](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/opt)       | facebook/opt-125m, facebook/opt-350m, facebook/opt-1.3b, facebook/opt-2.7b, facebook/opt-6.7b, facebook/opt-13b, facebook/opt-30b, facebook/opt-66b, facebook/opt-iml-1.3b, opt-iml-max-1.3b                                                                                                                                                                                                  |
+|     [Qwen](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/qwen/)      | qwen/qwen-7b, qwen/qwen-7b-chat, qwen/qwen-14b, qwen/qwen-14b-chat, qwen/qwen-72b, qwen/qwen-72b-chat,                                                                                                                                                                                                                                                                                        |
+|    [Qwen1.5](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/qwen/)    | Qwen/Qwen1.5-0.5B, Qwen/Qwen1.5-0.5B-Chat, Qwen/Qwen1.5-1.8B, Qwen/Qwen1.5-1.8B-Chat, Qwen/Qwen1.5-4B, Qwen/Qwen1.5-4B-Chat, Qwen/Qwen1.5-7B, Qwen/Qwen1.5-7B-Chat, Qwen/Qwen1.5-14B, Qwen/Qwen1.5-14B-Chat, Qwen/Qwen1.5-32B, Qwen/Qwen1.5-32B-Chat, Qwen/Qwen1.5-72B, Qwen/Qwen1.5-72B-Chat, Qwen/Qwen1.5-110B, Qwen/Qwen1.5-110B-Chat, Qwen/Qwen1.5-MoE-A2.7B, Qwen/Qwen1.5-MoE-A2.7B-Chat |
+|     [Qwen2](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/qwen/)     | Qwen/Qwen2-0.5B, Qwen/Qwen2-0.5B-Instruct, Qwen/Qwen2-1.5B, Qwen/Qwen2-1.5B-Instruct, Qwen/Qwen2-7B, Qwen/Qwen2-7B-Instruct, Qwen/Qwen2-72B, Qwen/Qwen2-72B-Instruct, Qwen/Qwen2-57B-A14B, Qwen/Qwen2-57B-A14B-Instruct                                                                                                                                                                       |
+|  [Qwen2-Math](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/qwen/)   | Qwen/Qwen2-Math-1.5B, Qwen/Qwen2-Math-1.5B-Instruct, Qwen/Qwen2-Math-7B, Qwen/Qwen2-Math-7B-Instruct, Qwen/Qwen2-Math-72B, Qwen/Qwen2-Math-72B-Instruct, Qwen/Qwen2-Math-RM-72B                                                                                                                                                                                                               |
+|    [Qwen2.5](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/qwen/)    | Qwen/Qwen2.5-0.5B, Qwen/Qwen2.5-0.5B-Instruct, Qwen/Qwen2.5-1.5B, Qwen/Qwen2.5-1.5B-Instruct, Qwen/Qwen2.5-3B, Qwen/Qwen2.5-3B-Instruct, Qwen/Qwen2.5-7B, Qwen/Qwen2.5-7B-Instruct, Qwen/Qwen2.5-14B, Qwen/Qwen2.5-14B-Instruct, Qwen/Qwen2.5-32B, Qwen/Qwen2.5-32B-Instruct, Qwen/Qwen2.5-72B, Qwen/Qwen2.5-72B-Instruct                                                                     |
+| [Qwen2.5-Math](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/qwen/)  | Qwen/Qwen2.5-Math-1.5B, Qwen/Qwen2.5-Math-1.5B-Instruct, Qwen/Qwen2.5-Math-7B, Qwen/Qwen2.5-Math-7B-Instruct, Qwen/Qwen2.5-Math-72B, Qwen/Qwen2.5-Math-72B-Instruct, Qwen/Qwen2.5-Math-RM-72B                                                                                                                                                                                                 |
+| [Qwen2.5-Coder](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/qwen/) | Qwen/Qwen2.5-Coder-1.5B, Qwen/Qwen2.5-Coder-1.5B-Instruct, Qwen/Qwen2.5-Coder-7B, Qwen/Qwen2.5-Coder-7B-Instruct                                                                                                                                                                                                                                                                              |
+|     [Yuan2](https://github.com/PaddlePaddle/PaddleNLP/tree/develop/llm/config/yuan/)     | IEITYuan/Yuan2-2B, IEITYuan/Yuan2-51B, IEITYuan/Yuan2-102B                                                                                                                                                                                                                                                                                                                                    |
 
 * 4D 并行和算子优化已支持 LLaMA 系列、Baichuan 系列、Bloom 系列、ChatGLM 系列、Gemma 系列、Mistral 系列、OPT 系列和 Qwen 系列，【LLM】模型4D 并行和算子支持列表如下：
 
@@ -91,15 +97,12 @@ Unified Checkpoint 大模型存储格式在模型参数分布上支持动态扩�
 |:---------------------:|:--------:|:------------:|:--------:|:------------:|:------:|:------:|:----------:|
 |                       |          |   基础能力   | 序列并行 |    stage1    | stage2 | stage3 |            |
 |         Llama         |    ✅     |      ✅       |    ✅     |      ✅       |   ✅    |   ✅    |     ✅      |
-|        Llama2         |    ✅     |      ✅       |    ✅     |      ✅       |   ✅    |   ✅    |     ✅      |
-|        Llama3         |    ✅     |      ✅       |    ✅     |      ✅       |   ✅    |   ✅    |     ✅      |
-|       Llama3.1        |    ✅     |      ✅       |    ✅     |      ✅       |   ✅    |   ✅    |     ✅      |
 |         Qwen          |    ✅     |      ✅       |    ✅     |      ✅       |   ✅    |   ✅    |     ✅      |
 |        Qwen1.5        |    ✅     |      ✅       |    ✅     |      ✅       |   ✅    |   ✅    |     ✅      |
 |         Qwen2         |    ✅     |      ✅       |    ✅     |      ✅       |   ✅    |   ✅    |     ✅      |
 |     Mixtral(moe)      |    ✅     |      ✅       |    ✅     |      ✅       |   ✅    |   ✅    |     🚧     |
 |        Mistral        |    ✅     |      ✅       |    🚧    |      ✅       |   ✅    |   ✅    |     🚧     |
-|  Baichuan(同 llama)   |    ✅     |      ✅       |    ✅     |      ✅       |   ✅    |   ✅    |     ✅      |
+|       Baichuan        |    ✅     |      ✅       |    ✅     |      ✅       |   ✅    |   ✅    |     ✅      |
 |       Baichuan2       |    ✅     |      ✅       |    ✅     |      ✅       |   ✅    |   ✅    |     ✅      |
 |        ChatGLM        |    ✅     |      ✅       |    🚧    |      ✅       |   ✅    |   ✅    |     🚧     |
 |       ChatGLM2        |    ✅     |      🚧      |    🚧    |      ✅       |   ✅    |   ✅    |     🚧     |
@@ -112,32 +115,32 @@ Unified Checkpoint 大模型存储格式在模型参数分布上支持动态扩�
 
 * 大模型预训练、精调（包含 SFT、PEFT 技术）、对齐、量化已支持 LLaMA 系列、Baichuan 系列、Bloom 系列、ChatGLM 系列、Mistral 系列、OPT 系列和 Qwen 系列，【LLM】模型预训练、精调、对齐、量化支持列表如下：
 
-| 模型名称/能力支持  | Pretrain | SFT | LoRA | Prefix Tuning | DPO | RLHF | Quantization | Torch convert |
-|:------------------:|:--------:|:---:|:----:|:-------------:|:---:|:----:|:------------:|:-------------:|
-|       LLaMA        |    ✅     |  ✅  |  ✅   |       ✅       |  ✅  |  ✅   |      ✅       |       ✅       |
-|        Qwen        |    ✅     |  ✅  |  ✅   |       ✅       |  ✅  |  🚧  |      🚧      |       ✅       |
-|      Mixtral       |    ✅     |  ✅  |  ✅   |       ❌       | 🚧  |  🚧  |      🚧      |      🚧       |
-|      Mistral       |    ✅     |  ✅  |  ✅   |       ✅       |  ✅  |  🚧  |      🚧      |       ✅       |
-| Baichuan/Baichuan2 |    ✅     |  ✅  |  ✅   |       ✅       |  ✅  |  🚧  |      ✅       |       ✅       |
-|     ChatGLM-6B     |    ✅     |  ✅  |  ✅   |       ✅       | 🚧  |  🚧  |      ✅       |       ❌       |
-| ChatGLM2/ChatGLM3  |    ✅     |  ✅  |  ✅   |       ✅       | 🚧  |  🚧  |      ✅       |       ✅       |
-|       Bloom        |    ✅     |  ✅  |  ✅   |       ✅       | 🚧  |  🚧  |      ✅       |       ✅       |
-|       GPT-3        |    ✅     |  ✅  |  🚧  |      🚧       | 🚧  |  🚧  |      🚧      |       ✅       |
-|        OPT         |    ✅     |  ✅  |  ✅   |      🚧       | 🚧  |  🚧  |      🚧      |       ✅       |
-|       Yuan2        |    ✅     |  ✅  |  ✅   |      🚧       | 🚧  |  🚧  |      🚧      |       ✅       |
+| 模型名称/能力支持  | Pretrain | SFT | FlashMask | LoRA | Prefix Tuning | DPO | RLHF | Quantization | Torch convert |
+|:------------------:|:--------:|:---:|:---------:|:----:|:-------------:|:---:|:----:|:------------:|:-------------:|
+|       Llama        |    ✅     |  ✅  |     ✅     |  ✅   |       ✅       |  ✅  |  ✅   |      ✅       |       ✅       |
+|        Qwen        |    ✅     |  ✅  |     ✅     |  ✅   |       ✅       |  ✅  |  🚧  |      🚧      |       ✅       |
+|      Mixtral       |    ✅     |  ✅  |     🚧     |  ✅  |       ❌       | 🚧  |  🚧  |      🚧      |      🚧       |
+|      Mistral       |    ✅     |  ✅  |     🚧     |  ✅  |       ✅       |  ✅  |  🚧  |      🚧      |       ✅       |
+| Baichuan/Baichuan2 |    ✅     |  ✅  |     ✅     |  ✅   |       ✅       |  ✅  |  🚧  |      ✅       |       ✅       |
+|     ChatGLM-6B     |    ✅     |  ✅  |     🚧     |  ✅  |       ✅       | 🚧  |  🚧  |      ✅       |       ❌       |
+| ChatGLM2/ChatGLM3  |    ✅     |  ✅  |     🚧     |  ✅  |       ✅       | 🚧  |  🚧  |      ✅       |       ✅       |
+|       Bloom        |    ✅     |  ✅  |     🚧     |  ✅  |       ✅       | 🚧  |  🚧  |      ✅       |       ✅       |
+|       GPT-3        |    ✅     |  ✅  |    🚧     |  🚧  |      🚧       | 🚧  |  🚧  |      🚧      |       ✅       |
+|        OPT         |    ✅     |  ✅  |     🚧     |  ✅  |      🚧       | 🚧  |  🚧  |      🚧      |       ✅       |
+|       Yuan2        |    ✅     |  ✅  |     🚧     |  ✅  |      🚧       | 🚧  |  🚧  |      🚧      |       ✅       |
 ------------------------------------------------------------------------------------------
 
 * [大模型推理](./llm/docs/predict/inference.md)已支持 LLaMA 系列、Qwen 系列、Mistral 系列、ChatGLM 系列、Bloom 系列和 Baichuan 系列，支持 Weight Only INT8及 INT4推理，支持 WAC（权重、激活、Cache KV）进行 INT8、FP8量化的推理，【LLM】模型推理支持列表如下：
 
-|                模型名称/量化类型支持            | FP16/BF16 | WINT8 | WINT4 | INT8-A8W8 | FP8-A8W8 | INT8-A8W8C8 |
-|:--------------------------------------------:|:---------:|:-----:|:-----:|:---------:|:--------:|:-----------:|
-| [LLaMA](./llm/docs/predict/llama.md)         | ✅        | ✅     | ✅      | ✅        | ✅       | ✅           |
-| [Qwen](./llm/docs/predict/qwen.md)           | ✅        | ✅     | ✅      | ✅        | ✅       | ✅           |
-| [Qwen-Moe](./llm/docs/predict/qwen.md)       | ✅        | ✅     | ✅      | 🚧        | 🚧       | 🚧           |
-| [Mixtral](./llm/docs/predict/mixtral.md)     | ✅        | ✅     | ✅      | 🚧        | 🚧       | 🚧           |
-| ChatGLM                                      | ✅        | ✅     | ✅      | 🚧        | 🚧       | 🚧           |
-| Bloom                                        | ✅        | ✅     | ✅      | 🚧        | 🚧       | 🚧           |
-| BaiChuan                                     | ✅        | ✅     | ✅      | ✅        | ✅       | 🚧           |
+|          模型名称/量化类型支持           | FP16/BF16 | WINT8 | WINT4 | INT8-A8W8 | FP8-A8W8 | INT8-A8W8C8 |
+|:----------------------------------------:|:---------:|:-----:|:-----:|:---------:|:--------:|:-----------:|
+|   [LLaMA](./llm/docs/predict/llama.md)   |     ✅     |   ✅   |   ✅   |     ✅     |    ✅     |      ✅      |
+|    [Qwen](./llm/docs/predict/qwen.md)    |     ✅     |   ✅   |   ✅   |     ✅     |    ✅     |      ✅      |
+|  [Qwen-Moe](./llm/docs/predict/qwen.md)  |     ✅     |   ✅   |   ✅   |    🚧     |    🚧    |     🚧      |
+| [Mixtral](./llm/docs/predict/mixtral.md) |     ✅     |   ✅   |   ✅   |    🚧     |    🚧    |     🚧      |
+|                 ChatGLM                  |     ✅     |   ✅   |   ✅   |    🚧     |    🚧    |     🚧      |
+|                  Bloom                   |     ✅     |   ✅   |   ✅   |    🚧     |    🚧    |     🚧      |
+|                 BaiChuan                 |     ✅     |   ✅   |   ✅   |     ✅     |    ✅     |     🚧      |
 
 ## 安装
 
@@ -146,10 +149,12 @@ Unified Checkpoint 大模型存储格式在模型参数分布上支持动态扩�
 * python >= 3.8
 * paddlepaddle >= 3.0.0b0
 
+如果您尚未安装 PaddlePaddle，请参考 [飞桨官网](https://www.paddlepaddle.org.cn/) 进行安装。
+
 ### pip 安装
 
 ```shell
-pip install --upgrade paddlenlp==3.0.0b1
+pip install --upgrade paddlenlp==3.0.0b2
 ```
 
 或者可通过以下命令安装最新 develop 分支代码：
@@ -203,8 +208,8 @@ python -u -m paddle.distributed.launch --gpus "0,1,2,3,4,5,6,7" run_finetune.py 
 
 更多 PaddleNLP 内容可参考：
 
-* [精选模型库](./legacy/model_zoo)，包含优质预训练模型的端到端全流程使用。
-* [多场景示例](./legacy/examples)，了解如何使用 PaddleNLP 解决 NLP 多种技术问题，包含基础技术、系统应用与拓展应用。
+* [精选模型库](./slm/model_zoo)，包含优质预训练模型的端到端全流程使用。
+* [多场景示例](./slm/examples)，了解如何使用 PaddleNLP 解决 NLP 多种技术问题，包含基础技术、系统应用与拓展应用。
 * [交互式教程](https://aistudio.baidu.com/aistudio/personalcenter/thirdview/574995)，在🆓免费算力平台 AI Studio 上快速学习 PaddleNLP。
 
 ------------------------------------------------------------------------------------------
