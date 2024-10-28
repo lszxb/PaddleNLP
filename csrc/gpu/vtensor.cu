@@ -58,8 +58,6 @@ static size_t compute_real_alloc_size(const phi::DenseTensorMeta& meta) {
 
 static void dealloc_virtual_allocation(phi::Allocation* ptr) {
     auto metadata = virtual_allocation_metadata.at((CUdeviceptr)ptr->ptr());
-    // std::cout << "releasing virtual allocation with " 
-    //     << metadata.physics_block_handle.size() << " blocks" << std::endl;
     
     // cuMemUnmap does not synchronize with the in-flight kernels, so we need to sync here
     int current_device = -1;
@@ -144,8 +142,6 @@ static phi::DenseTensor* expand_one_token(const phi::DenseTensor& self) {
     if (required_size <= new_tensor->capacity()) {
         return new_tensor;
     } else {
-        // std::cout << "expanding virtual allocation" << std::endl;
-
         auto &metadata = virtual_allocation_metadata.at((CUdeviceptr)new_tensor->data());
 
         PD_CHECK(required_size <= metadata.reserved_size, "reserved size is not enough");
@@ -229,8 +225,6 @@ std::vector<paddle::Tensor> VTensorReserveOneToken(
     const paddle::Tensor& append_state,
     bool transposed_input
 ) {
-    // std::cout << "vtensor_reserve_one_token 1 " << (uintptr_t)cache_transposed.data() << std::endl;
-
     PD_CHECK(cache_transposed.place().GetType() == phi::AllocationType::GPU);
     PD_CHECK(append_state.place().GetType() == phi::AllocationType::GPU);
 
@@ -247,22 +241,15 @@ std::vector<paddle::Tensor> VTensorReserveOneToken(
     } else {
         cache = cache_transposed;
     }
-    
-    // std::cout << "vtensor_reserve_one_token 2 " << (uintptr_t)cache.data() << std::endl;
 
     PD_CHECK(cache.is_dense_tensor());
     
     std::shared_ptr<phi::DenseTensor> vtensor;
     if (virtual_allocation_metadata.find((CUdeviceptr)cache.data()) != virtual_allocation_metadata.end()) {
-        // std::cout << "found vtensor" << std::endl;
-        
         PD_CHECK(get_max_stride(cache.strides()) == cache.strides()[1]);
         vtensor = std::static_pointer_cast<phi::DenseTensor>(cache.impl());
     }
     else {
-        // std::cout << "not a vtensor, allocating a new one" << std::endl;
-
-        // phi::DenseTensorMeta meta(cache.dtype(), cache.dims(), cache.strides());
         phi::DenseTensorMeta meta(cache.dtype(), cache.dims(), compute_transposed_strides(cache));
         paddle::Tensor new_tensor{std::shared_ptr<phi::TensorBase>(alloc_vtensor(meta, cache.place()))};
         paddle::experimental::assign_out_(cache, new_tensor);
