@@ -291,7 +291,7 @@ class ForcedEOSTokenLogitsProcessor(LogitsProcessor):
 
 
 def TopKProcess(probs: paddle.Tensor, top_k: int, min_tokens_to_keep: int):
-    if paddle.is_tensor(top_k): # for sample_d2s
+    if paddle.is_tensor(top_k):  # for sample_d2s
         top_k = paddle.clip(top_k, min=min_tokens_to_keep, max=probs.shape[-1])
     else:
         top_k = min(max(top_k, min_tokens_to_keep), probs.shape[-1])

@@ -1421,7 +1421,7 @@ class GenerationMixin(object):
 
                 # do Gumbel-Max trick sampling manually here to avoid sync introduced by paddle.multinomial
                 noise = paddle.rand(shape=probs.shape, dtype=probs.dtype)
-                noisy_probs = paddle.log(probs) - paddle.clip(paddle.log(-paddle.log(noise)), max=100) # clip to avoid underflow
+                noisy_probs = paddle.log(probs) - paddle.clip(paddle.log(-paddle.log(noise)), max=100)  # clip to avoid underflow
                 next_tokens = paddle.unsqueeze(paddle.argmax(noisy_probs, axis=-1), -1)
 
             next_scores = paddle.index_sample(origin_probs, next_tokens)
