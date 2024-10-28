@@ -14,7 +14,7 @@ PaddleNLP 提供了 Trainer 训练 API，针对训练过程的通用训练配置
 ## Trainer 基本使用方法介绍
 
 下面是用户使用 Trainer API 进行 finetune 任务的简单示例，这里以中文情感分类数据集`chnsenticorp`为例。
-更详细的使用可以参考[CLUE Trainer](https://github.com/PaddlePaddle/PaddleNLP/blob/develop/legacy/examples/benchmark/clue/classification/run_clue_classifier_trainer.py)版本。
+更详细的使用可以参考[CLUE Trainer](https://github.com/PaddlePaddle/PaddleNLP/blob/develop/slm/examples/benchmark/clue/classification/run_clue_classifier_trainer.py)版本。
 
 1. 导入需要用到的头文件。
     - 主要是模型、Tokenizer
@@ -82,7 +82,7 @@ if training_args.do_train:
     trainer.log_metrics("train", metrics)
     trainer.save_state()
 ```
-预训练的使用方式可以参考[ERNIE-1.0 Trainer](https://github.com/PaddlePaddle/PaddleNLP/blob/develop/legacy/model_zoo/ernie-1.0/run_pretrain_trainer.py)版本。
+预训练的使用方式可以参考[ERNIE-1.0 Trainer](https://github.com/PaddlePaddle/PaddleNLP/blob/develop/slm/model_zoo/ernie-1.0/run_pretrain_trainer.py)版本。
 
 
 ## Trainer 进阶分布式能力使用介绍
@@ -505,6 +505,14 @@ Trainer 是一个简单，但功能完整的 Paddle 训练和评估模块，并�
                         Sharding parameter in certain cards group. For example, aussume we use 2 machines each
                         with 8 cards, then set sharding_degree=8, sharding will only communication inside machine.
                         default -1 means sharding parameters between all workers. (`int`, *optional*, defaults to `-1`)
+
+  --sharding_comm_buffer_size_MB
+                        设置sharding的通信中fuse梯度的大小。此选项只在sharding选项开启时候生效。
+                        默认值为-1，表示所有通信fuse的梯度大小按照默认配置，默认配置是256MB。
+                        (`int`, 可选, 默认为 `-1`)
+
+                        Set the size of the fuse gradient in sharding communication. This option only takes effect when the sharding option is turned on.The default value is -1, which means that the gradient size of all communication fuses follows the default configuration, which is 256MB.
+                        (`int`, optional, default `-1`)
 
   --tensor_parallel_degree
                         张量并行是Megatron论文针对Transformer结构的张量切分方法.
