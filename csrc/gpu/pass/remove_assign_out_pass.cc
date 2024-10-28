@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "paddle/extension.h"
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+
+#include "paddle/extension.h"
 
 namespace {
 
@@ -26,7 +27,8 @@ public:
     paddle::drr::SourcePattern pat = ctx->SourcePattern();
 
     const auto &assign_out_ = pat.Op("pd_op.assign_out_");
-    assign_out_({&pat.Tensor("assign_in"), &pat.Tensor("assign_out")}, {&pat.Tensor("out")});
+    assign_out_({&pat.Tensor("assign_in"), &pat.Tensor("assign_out")},
+                {&pat.Tensor("out")});
 
     pat.AddConstraint([](const paddle::drr::MatchContext &match_ctx) {
       auto &out = match_ctx.Tensor("out");
@@ -34,13 +36,13 @@ public:
       auto parent_op = out.defining_op()->GetParentOp();
 
       auto &assign_out = match_ctx.Tensor("assign_out");
-      
-      if (
-        parent_block && parent_op &&
-        parent_op->name() == "pd_op.while" &&
-        out.use_count() == 1 && out.use_begin()->owner()->name() == "cf.yield" &&
-        std::find(parent_block->args_begin(), parent_block->args_end(), assign_out) != parent_block->args_end()
-      ) {
+
+      if (parent_block && parent_op && parent_op->name() == "pd_op.while" &&
+          out.use_count() == 1 &&
+          out.use_begin()->owner()->name() == "cf.yield" &&
+          std::find(parent_block->args_begin(),
+                    parent_block->args_end(),
+                    assign_out) != parent_block->args_end()) {
         return true;
       }
       return false;
@@ -53,7 +55,8 @@ public:
 
 class RemoveAssignOutPass : public pir::PatternRewritePass {
 public:
-  RemoveAssignOutPass() : pir::PatternRewritePass("remove_assign_out_pass", 2) {}
+  RemoveAssignOutPass()
+      : pir::PatternRewritePass("remove_assign_out_pass", 2) {}
 
   pir::RewritePatternSet InitializePatterns(pir::IrContext *context) override {
     pir::RewritePatternSet ps(context);
@@ -62,6 +65,6 @@ public:
   }
 };
 
-} // namespace
+}  // namespace
 
 REGISTER_IR_PASS(remove_assign_out_pass, RemoveAssignOutPass);
